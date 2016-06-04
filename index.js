@@ -102,5 +102,23 @@
             // averange, you could aubstitute 205 of total cholestrol, and 51 for HDL.
             // Adults 20 and over have chilesterol testing at least every five years
         }
-    }
+    };
+
+    var tableOfResults = {
+        [gender: "men", scoreFrom: 0, scoreTo: 35, oneYear: "<0,1%", fiveYears: "<0,4%", tenYears: "<1%"],
+        [gender: "men", scoreFrom: 36, scoreTo: 45, oneYear: "0.1-0.2%", fiveYears: "0.4-1%", tenYears: "1-3%"],
+        [gender: "men", scoreFrom: 46, scoreTo: 55, oneYear: "0.2-0.6%", fiveYears: "1-3%", tenYears: "3-7%"],
+        [gender: "men", scoreFrom: 56, scoreTo: 65, oneYear: "0.6-2%", fiveYears: "3-8%", tenYears: "7-17%"],
+        [gender: "men", scoreFrom: 66, scoreTo: 70, oneYear: "0.2%", fiveYears: "8-13%", tenYears: "17-27%"],
+        [gender: "men", scoreFrom: 71, scoreTo: 75, oneYear: "0.2-4%", fiveYears: "13-20%", tenYears: "27-40%"],
+        [gender: "men", scoreFrom: 76, scoreTo: 80, oneYear: "0.4-6%", fiveYears: "20-30%", tenYears: "40-56%"],
+
+        [gender: "women", scoreFrom: 0, scoreTo: 60, oneYear: "<0,1%", fiveYears: "<0,4%", tenYears: "<1%"],
+        [gender: "women", scoreFrom: 61, scoreTo: 70, oneYear: "0.1-0.2%", fiveYears: "0.4-1%", tenYears: "1-3%"],
+        [gender: "women", scoreFrom: 71, scoreTo: 80, oneYear: "0.2-0.5%", fiveYears: "1-3%", tenYears: "3-7%"],
+        [gender: "women", scoreFrom: 81, scoreTo: 85, oneYear: "0.5-1%", fiveYears: "3-5%", tenYears: "7-12%"],
+        [gender: "women", scoreFrom: 86, scoreTo: 90, oneYear: "1%", fiveYears: "5-8%", tenYears: "12-19%"],
+        [gender: "women", scoreFrom: 91, scoreTo: 95, oneYear: "1-2%", fiveYears: "8-13%", tenYears: "19-29%"],
+        [gender: "women", scoreFrom: 96, scoreTo: 100, oneYear: "2-4%", fiveYears: "13-20%", tenYears: "29-43%"],
+    };
 });
