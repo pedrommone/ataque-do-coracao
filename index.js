@@ -1,4 +1,9 @@
 (function () {
+    var questionate = {
+        askQuestion: function (question, placeholder) {},
+        askConfirm: function (question) {}, 
+    };
+
     var questions = {
         askSex: function () {
             //qual seu sexo?
