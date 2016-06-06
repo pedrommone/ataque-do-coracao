@@ -276,6 +276,11 @@ var tableOfResults = [
 questions.askSex();
 questions.askHeight();
 questions.askWeight();
+questions.askSystolicPressure();
+questions.askAge();
+questions.askIfKnowCholesterol();
+questions.askTotalCholesterol();
+questions.askHDLChonesterol();
 questions.askExercise();
 questions.askBMI();
 questions.askDiabetes();
