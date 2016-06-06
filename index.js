@@ -11,6 +11,8 @@ var responses = {
     "exSmoker": false,
     "isTakingOnlyEstrogen": false,
     "isUsingEstrogen": false,
+    "age": 0,
+    "knowCholesterol": false,
 };
 
 var questionate = {
@@ -52,6 +54,59 @@ var questions = {
 
     askWeight: function () {
         responses["weight"] = questionate.askQuestion("Qual o seu peso em KG?");
+    },
+
+    askSystolicPressure: function () {
+        // Multiply your systolic pressure (the higher number)
+        // By 0.14 if male, by 0.15 if female
+        // Woman/Men: +result
+
+        responses["systolic"] = questionate.askQuestion("Qual sua pressão arterial sistólica?");
+
+        questionate.modifyPoints(true, responses["systolic"] * 0.14, responses["systolic"] * 0.15);
+    },
+
+    askAge: function () {
+        // Multiply your age by 0.51 if male, by 0.8 if female
+        // Woman/Men: +result
+
+        responses["age"] = questionate.askQuestion("Qual a sua idade?");
+
+        questionate.modifyPoints(true, responses["age"] * 0.51, responses["age"] * 0.8);
+    },
+
+    askIfKnowCholesterol: function () {
+        responses["knowCholesterol"] = questionate.askYesOrNo("Você sabe o seu nível de colesterol?");
+    },
+
+    askTotalCholesterol: function () {
+        // Multiply your total cholesterol level by 0.07 if male, by 0.06 if femalte
+        // Woman/Men: +result
+
+        if (responses["knowCholesterol"]) {
+            res = questionate.askQuestion("Qual seu coleterol total?");
+        } else {
+            res = 205;
+        }
+
+        questionate.modifyPoints(true, res * 0.07, res * 0.06);
+    },
+
+    askHDLChonesterol: function () {
+        // Multiply your HDL level by 0.25 if male, by 0.3 if female
+        // Woman/Men: -result
+
+        // If you dont know your cholesterol levels and want to assume they're about
+        // averange, you could aubstitute 205 of total cholestrol, and 51 for HDL.
+        // Adults 20 and over have chilesterol testing at least every five years
+
+        if (responses["knowCholesterol"]) {
+            res = questionate.askQuestion("Qual seu coleterol HDL?");
+        } else {
+            res = 51;
+        }
+
+        questionate.modifyPoints(true, res * 0.25, res * 0.3);
     },
 
     askExercise: function () {
@@ -198,31 +253,6 @@ var questions = {
         var res = questionate.askYesOrNo("Você bebe moderadamente (significa tomar de dois até 14 drinks por semana)?");
         questionate.modifyPoints(res, -4, -4);
     },
-
-    askAboutSystolicPressure: function () {
-        // Multiply your systolic pressure (the higher number)
-        // By 0.14 if male, by 0.15 if female
-        // Woman/Men: +result
-    },
-
-    askAboutAge: function () {
-        // Multiply your age by 0.51 if male, by 0.8 if female
-        // Woman/Men: +result
-    },
-
-    askAboutCholesterol: function () {
-        // Multiply your total cholesterol level by 0.07 if male, by 0.05 if femalte
-        // Woman/Men: +result
-    },
-
-    askAboutHDL: function () {
-        // Multiply your HDL level by 0.25 if male, by 0.3 if female
-        // Woman/Men: -result
-
-        // If you dont know your cholesterol levels and want to assume they're about
-        // averange, you could aubstitute 205 of total cholestrol, and 51 for HDL.
-        // Adults 20 and over have chilesterol testing at least every five years
-    }
 };
 
 var tableOfResults = [
