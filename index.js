@@ -13,6 +13,10 @@ var responses = {
     "isUsingEstrogen": false,
     "age": 0,
     "knowCholesterol": false,
+    "doctorName": null,
+    "doctorCRM": null,
+    "patientName": null,
+    "patientCPF": null,
 };
 
 var questionate = {
@@ -48,6 +52,22 @@ var questionate = {
 };
 
 var questions = {
+    askDoctorName: function () {
+        responses["doctorName"] = questionate.askQuestion("Qual o nome do médico responsável pelo exame?");
+    },
+
+    askDoctorCRM: function () {
+        responses["doctorCRM"] = questionate.askQuestion("Qual o CRM do médico responsável pelo exame?");
+    },
+
+    askPatientName: function () {
+        responses["patientName"] = questionate.askQuestion("Qual o nome do paciente que está fazendo o exame?");
+    },
+
+    askPatientCPF: function () {
+        responses["patientCPF"] = questionate.askQuestion("Qual o CPF do paciente que está fazendo o exame?");
+    },
+
     askSex: function () {
         responses["sex"] = questionate.askQuestion("Qual o seu sexo?\n\n(M) para Masculino e (F) para feminino");
     },
@@ -297,7 +317,11 @@ var result = {
     trasformInText: function () {
         var result = this.seekAndReturnResult();
 
-        return "A sua pontuação é de " + responses["points"] + "\n\n\n" +
+        return "A sua pontuação é de " + responses["points"] + "\n" +
+            "Este exame é de responsabilidade do médico " + result.doctorName + " (CRM: " + result.doctorCRM + ")\n" +
+            "Este exame pertence ao paciente " + result.patientName + " (CPF" + result.patientCPF + ")\n" +
+            "\n" +
+            "\n" +
             "Em um ano, você tem " + result.oneYear + " de chances de sofrer um ataque do coração.\n" +
             "Em cinco anos, você tem " + result.fiveYears + " de chances de sofrer um ataque do coração.\n" +
             "Em dez anos, você tem " + result.tenYears + " de chances de sofrer um ataque do coração.\n";
