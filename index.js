@@ -38,7 +38,7 @@ var questionate = {
 
     modifyPoints: function (res, men, woman) {
         if (res === true) {
-            if (responses.sex == "M") {
+            if (responses.sex == 'm') {
                 responses["points"] += men;
             } else {
                 responses["points"] += woman;
@@ -98,13 +98,13 @@ var questions = {
     },
 
     askSex: function () {
-        var sex = questionate.askQuestion("Qual o seu sexo?\n\n(M) para Masculino e (F) para feminino")
+        var sex = questionate.askQuestion("Qual o seu sexo?\n\n(M) para Masculino e (F) para feminino").toLowerCase();
 
-        if(!sex){
+        if(!sex || (sex !== 'm' && sex !== 'f')){
           alert('Por favor, informe seu sexo (m ou f)');
           this.askSex();
         } else
-          responses["sex"] = sex.toLowerCase();
+          responses["sex"] = sex;
     },
 
     askHeight: function () {
@@ -150,7 +150,12 @@ var questions = {
 
         responses["age"] = parseInt(questionate.askQuestion("Qual a sua idade?"));
 
-        questionate.modifyPoints(true, responses["age"] * 0.51, responses["age"] * 0.8);
+        if(!responses["age"]){
+          alert("Por favor, informe sua idade.");
+          this.askAge();
+        }
+        else
+          questionate.modifyPoints(true, responses["age"] * 0.51, responses["age"] * 0.8);
     },
 
     askIfKnowCholesterol: function () {
@@ -358,7 +363,7 @@ var result = {
             res = null;
 
         table.forEach(function (elm, index, arr) {
-            if (elm["gender"] == responses["sex"]) {
+            if (elm["gender"] === responses["sex"]) {
                 if (elm["scoreFrom"] <= responses["points"] && elm["scoreTo"] >= responses["points"]) {
                     res = elm;
                 }
@@ -371,34 +376,25 @@ var result = {
     trasformInText: function () {
         var result = this.seekAndReturnResult();
 
-        if(result.doctorName){
-          return "A sua pontuação é de " + responses["points"] + "\n" +
-              "Este exame é de responsabilidade do médico " + result.doctorName + " (CRM: " + result.doctorCRM + ")\n" +
-              "Este exame pertence ao paciente " + result.patientName + " (CPF" + result.patientCPF + ")\n" +
-              "\n" +
-              "\n" +
-              "Em um ano, você tem " + result.oneYear + " de chances de sofrer um ataque do coração.\n" +
-              "Em cinco anos, você tem " + result.fiveYears + " de chances de sofrer um ataque do coração.\n" +
-              "Em dez anos, você tem " + result.tenYears + " de chances de sofrer um ataque do coração.\n";
-        }
-        else {
-          return "A sua pontuação é de " + responses["points"] + "\n" +
-              "\n" +
-              "\n" +
-              "Em um ano, você tem " + result.oneYear + " de chances de sofrer um ataque do coração.\n" +
-              "Em cinco anos, você tem " + result.fiveYears + " de chances de sofrer um ataque do coração.\n" +
-              "Em dez anos, você tem " + result.tenYears + " de chances de sofrer um ataque do coração.\n";
-        }
+        return "A sua pontuação é de " + Math.round(responses["points"]) + "\n" +
+            "Este exame é de responsabilidade do médico " + responses['doctorName'] + " (CRM: " + responses['doctorCRM'] + ")\n" +
+            "Este exame pertence ao paciente " + responses['patientName'] + " (CPF" + responses['patientCPF']+ ")\n" +
+            "\n" +
+            "\n" +
+            "Em um ano, você tem " + result.oneYear + " de chances de sofrer um ataque do coração.\n" +
+            "Em cinco anos, você tem " + result.fiveYears + " de chances de sofrer um ataque do coração.\n" +
+            "Em dez anos, você tem " + result.tenYears + " de chances de sofrer um ataque do coração.\n";
     },
 
     show: function () {
         questionate.askShow(this.trasformInText());
     },
 };
-questions.askPatientName();
-questions.askPatientCPF();
+
 questions.askDoctorName();
 questions.askDoctorCRM();
+questions.askPatientName();
+questions.askPatientCPF();
 questions.askSex();
 questions.askHeight();
 questions.askWeight();
