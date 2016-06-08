@@ -65,7 +65,10 @@ var questions = {
     },
 
     askPatientCPF: function () {
-        responses["patientCPF"] = questionate.askQuestion("Qual o CPF do paciente que está fazendo o exame?");
+        var cpf = questionate.askQuestion("Qual o CPF do paciente que está fazendo o exame?");
+        cpf = cpf.replace(".", "");
+        cpf = cpf.replace("-", "");
+        responses["patientCPF"] = cpf;
     },
 
     askSex: function () {
@@ -344,7 +347,10 @@ var result = {
         questionate.askShow(this.trasformInText());
     },
 };
-
+questions.askPatientName();
+questions.askPatientCPF();
+questions.askDoctorName();
+questions.askDoctorCRM();
 questions.askSex();
 questions.askHeight();
 questions.askWeight();
