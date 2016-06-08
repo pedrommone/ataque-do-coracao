@@ -53,37 +53,78 @@ var questionate = {
 
 var questions = {
     askDoctorName: function () {
-        responses["doctorName"] = questionate.askQuestion("Qual o nome do médico responsável pelo exame?");
+        var dName = questionate.askQuestion("Qual o nome do médico responsável pelo exame?");
+
+        if(!dName){
+          alert('Por favor, informe o Nome do médico.');
+          this.askDoctorName();
+        }
+        else
+          responses["doctorName"] = dName;
     },
 
     askDoctorCRM: function () {
-        responses["doctorCRM"] = questionate.askQuestion("Qual o CRM do médico responsável pelo exame?");
+        var crm = questionate.askQuestion("Qual o CRM do médico responsável pelo exame?");
+
+        if(!crm){
+          alert('Por favor, informe o CRM do medico');
+          this.askDoctorCRM();
+        }
+        responses["doctorCRM"] = crm;
     },
 
     askPatientName: function () {
-        responses["patientName"] = questionate.askQuestion("Qual o nome do paciente que está fazendo o exame?");
+        var name = questionate.askQuestion("Qual o nome do paciente que está fazendo o exame?");
+
+        if(!name){
+          alert('Por favor, informe o nome do paciente');
+          this.askPatientName();
+        }
+        else
+          responses["patientName"] = name;
     },
 
     askPatientCPF: function () {
         var cpf = questionate.askQuestion("Qual o CPF do paciente que está fazendo o exame?");
         cpf = cpf.replace(".", "");
         cpf = cpf.replace("-", "");
-        responses["patientCPF"] = cpf;
+
+        if(!cpf){
+          alert('Por favor, um CPF válido.');
+          this.askPatientCPF();
+        }
+        else
+          responses["patientCPF"] = cpf;
     },
 
     askSex: function () {
         var sex = questionate.askQuestion("Qual o seu sexo?\n\n(M) para Masculino e (F) para feminino")
-        responses["sex"] = sex.toLowerCase();
+
+        if(!sex){
+          alert('Por favor, informe seu sexo (m ou f)');
+          this.askSex();
+        } else
+          responses["sex"] = sex.toLowerCase();
     },
 
     askHeight: function () {
-      var height = parseInt(questionate.askQuestion("Qual a sua altura em centimetros?"));
-      responses["height"] = height;
+      var height = questionate.askQuestion("Qual a sua altura em centimetros?");
+
+      if(!height){
+        alert('Por favor, informe sua altura (em CM)');
+        this.askHeight();
+      } else
+        responses["height"] = parseInt(height);
     },
 
     askWeight: function () {
-      var weight = parseInt(questionate.askQuestion("Qual o seu peso em KG?"));
-      responses["weight"] = weight;
+      var weight = questionate.askQuestion("Qual o seu peso em KG?");
+
+      if(!weight){
+        alert('Por favor, informe seu peso (em KG)');
+        this.askWeight();
+      } else
+        responses["weight"] = parseInt(weight);
     },
 
     askSystolicPressure: function () {
@@ -91,7 +132,14 @@ var questions = {
         // By 0.14 if male, by 0.15 if female
         // Woman/Men: +result
 
-        responses["systolic"] = questionate.askQuestion("Qual sua pressão arterial sistólica?");
+        var pression = questionate.askQuestion("Qual sua pressão arterial sistólica?");
+
+        if(!pression){
+          alert('Por favor, informe o valor da sua pressão');
+          this.askSystolicPressure();
+        }
+        else
+          responses["systolic"] = pression;
 
         questionate.modifyPoints(true, responses["systolic"] * 0.14, responses["systolic"] * 0.15);
     },
