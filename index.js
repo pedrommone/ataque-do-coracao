@@ -69,15 +69,18 @@ var questions = {
     },
 
     askSex: function () {
-        responses["sex"] = questionate.askQuestion("Qual o seu sexo?\n\n(M) para Masculino e (F) para feminino");
+        var sex = questionate.askQuestion("Qual o seu sexo?\n\n(M) para Masculino e (F) para feminino")
+        responses["sex"] = sex.toLowerCase();
     },
 
     askHeight: function () {
-        responses["height"] = questionate.askQuestion("Qual a sua altura em centimetros?")
+      var height = parseInt(questionate.askQuestion("Qual a sua altura em centimetros?"));
+      responses["height"] = height;
     },
 
     askWeight: function () {
-        responses["weight"] = questionate.askQuestion("Qual o seu peso em KG?");
+      var weight = parseInt(questionate.askQuestion("Qual o seu peso em KG?"));
+      responses["weight"] = weight;
     },
 
     askSystolicPressure: function () {
@@ -94,7 +97,7 @@ var questions = {
         // Multiply your age by 0.51 if male, by 0.8 if female
         // Woman/Men: +result
 
-        responses["age"] = questionate.askQuestion("Qual a sua idade?");
+        responses["age"] = parseInt(questionate.askQuestion("Qual a sua idade?"));
 
         questionate.modifyPoints(true, responses["age"] * 0.51, responses["age"] * 0.8);
     },
@@ -165,7 +168,7 @@ var questions = {
 
     askDiabetes: function () {
         // Do you have diabetes?
-        // Men: +8, Woman: +11 
+        // Men: +8, Woman: +11
         var res = questionate.askYesOrNo("Você tem diabetes?");
         questionate.modifyPoints(res, +8, +11);
     },
@@ -221,25 +224,25 @@ var questions = {
     },
 
     asbAboutPostmenopausal: function () {
-        if (responses["sex"] !== "M") {
+        if (responses["sex"] !== 'm') {
             responses["postmenopausal"] = questionate.askYesOrNo("Você está na pós-menopausa?");
         }
     },
 
     askAboutTakingEstrogenAlone: function () {
-        if (responses["postmenopausal"]) {
+        if (responses["sex"] !== 'm') {
             // If postmenopausal, are you currently taking estrogen alone?
             // Woman: -5
             responses["isTakingOnlyEstrogen"] = questionate.askYesOrNo("Você está usando somente estrógeno?");
             questionate.modifyPoints(responses["isTakingOnlyEstrogen"], 0, -5);
-            
+
             // Se está usando somente estrógeno, está usando estrógeno
             responses["isUsingEstrogen"] = responses["isTakingOnlyEstrogen"];
         }
     },
 
     askAboutEstrogenAndProgestin: function () {
-        if (!responses["isTakingOnlyEstrogen"] && responses["sex"] !== "M") {
+        if (!responses["isTakingOnlyEstrogen"] !== null && responses["sex"] !== 'm') {
             // Are you currently taking estrogen plus progestin?
             // Women: -3
             var res = questionate.askYesOrNo("Você está usando estrógeno com progestina?");
@@ -251,7 +254,7 @@ var questions = {
     },
 
     askAboutPreviousEstrogen: function () {
-        if (!responses["isUsingEstrogen"] && responses["sex"] !== "M") {
+        if (!responses["isUsingEstrogen"] !== null && responses["sex"] !== 'm') {
             // If you don´t currently take estrogen, did you previously take it? (With or without progestin)
             // Woman: -2
             var res = questionate.askYesOrNo("Você já usou estrógeno no passo?");
@@ -260,7 +263,7 @@ var questions = {
     },
 
     askAboutLowDosesOfApsirin: function () {
-        if (responses["sex"] == "M") {
+        if (responses["sex"] !== 'm') {
             // Do you take low doses of aspirin at least every other day?
             // (A low dose is between 1/4 and one whole 325mg, tablet)
             // Men: -4
@@ -282,20 +285,20 @@ var questions = {
 var result = {
     getTableOfResults: function () {
         return [
-            {gender: "M", scoreFrom: 0, scoreTo: 35, oneYear: "<0,1%", fiveYears: "<0,4%", tenYears: "<1%"},
-            {gender: "M", scoreFrom: 36, scoreTo: 45, oneYear: "0.1-0.2%", fiveYears: "0.4-1%", tenYears: "1-3%"},
-            {gender: "M", scoreFrom: 46, scoreTo: 55, oneYear: "0.2-0.6%", fiveYears: "1-3%", tenYears: "3-7%"},
-            {gender: "M", scoreFrom: 56, scoreTo: 65, oneYear: "0.6-2%", fiveYears: "3-8%", tenYears: "7-17%"},
-            {gender: "M", scoreFrom: 66, scoreTo: 70, oneYear: "0.2%", fiveYears: "8-13%", tenYears: "17-27%"},
-            {gender: "M", scoreFrom: 71, scoreTo: 75, oneYear: "0.2-4%", fiveYears: "13-20%", tenYears: "27-40%"},
-            {gender: "M", scoreFrom: 76, scoreTo: 80, oneYear: "0.4-6%", fiveYears: "20-30%", tenYears: "40-56%"},
-            {gender: "F", scoreFrom: 0, scoreTo: 60, oneYear: "<0,1%", fiveYears: "<0,4%", tenYears: "<1%"},
-            {gender: "F", scoreFrom: 61, scoreTo: 70, oneYear: "0.1-0.2%", fiveYears: "0.4-1%", tenYears: "1-3%"},
-            {gender: "F", scoreFrom: 71, scoreTo: 80, oneYear: "0.2-0.5%", fiveYears: "1-3%", tenYears: "3-7%"},
-            {gender: "F", scoreFrom: 81, scoreTo: 85, oneYear: "0.5-1%", fiveYears: "3-5%", tenYears: "7-12%"},
-            {gender: "F", scoreFrom: 86, scoreTo: 90, oneYear: "1%", fiveYears: "5-8%", tenYears: "12-19%"},
-            {gender: "F", scoreFrom: 91, scoreTo: 95, oneYear: "1-2%", fiveYears: "8-13%", tenYears: "19-29%"},
-            {gender: "F", scoreFrom: 96, scoreTo: 100, oneYear: "2-4%", fiveYears: "13-20%", tenYears: "29-43%"},
+            {gender: 'm', scoreFrom: 0, scoreTo: 35, oneYear: "<0,1%", fiveYears: "<0,4%", tenYears: "<1%"},
+            {gender: 'm', scoreFrom: 36, scoreTo: 45, oneYear: "0.1-0.2%", fiveYears: "0.4-1%", tenYears: "1-3%"},
+            {gender: 'm', scoreFrom: 46, scoreTo: 55, oneYear: "0.2-0.6%", fiveYears: "1-3%", tenYears: "3-7%"},
+            {gender: 'm', scoreFrom: 56, scoreTo: 65, oneYear: "0.6-2%", fiveYears: "3-8%", tenYears: "7-17%"},
+            {gender: 'm', scoreFrom: 66, scoreTo: 70, oneYear: "0.2%", fiveYears: "8-13%", tenYears: "17-27%"},
+            {gender: 'm', scoreFrom: 71, scoreTo: 75, oneYear: "0.2-4%", fiveYears: "13-20%", tenYears: "27-40%"},
+            {gender: 'm', scoreFrom: 76, scoreTo: 80, oneYear: "0.4-6%", fiveYears: "20-30%", tenYears: "40-56%"},
+            {gender: 'f', scoreFrom: 0, scoreTo: 60, oneYear: "<0,1%", fiveYears: "<0,4%", tenYears: "<1%"},
+            {gender: 'f', scoreFrom: 61, scoreTo: 70, oneYear: "0.1-0.2%", fiveYears: "0.4-1%", tenYears: "1-3%"},
+            {gender: 'f', scoreFrom: 71, scoreTo: 80, oneYear: "0.2-0.5%", fiveYears: "1-3%", tenYears: "3-7%"},
+            {gender: 'f', scoreFrom: 81, scoreTo: 85, oneYear: "0.5-1%", fiveYears: "3-5%", tenYears: "7-12%"},
+            {gender: 'f', scoreFrom: 86, scoreTo: 90, oneYear: "1%", fiveYears: "5-8%", tenYears: "12-19%"},
+            {gender: 'f', scoreFrom: 91, scoreTo: 95, oneYear: "1-2%", fiveYears: "8-13%", tenYears: "19-29%"},
+            {gender: 'f', scoreFrom: 96, scoreTo: 100, oneYear: "2-4%", fiveYears: "13-20%", tenYears: "29-43%"},
         ];
     },
 
@@ -317,14 +320,24 @@ var result = {
     trasformInText: function () {
         var result = this.seekAndReturnResult();
 
-        return "A sua pontuação é de " + responses["points"] + "\n" +
-            "Este exame é de responsabilidade do médico " + result.doctorName + " (CRM: " + result.doctorCRM + ")\n" +
-            "Este exame pertence ao paciente " + result.patientName + " (CPF" + result.patientCPF + ")\n" +
-            "\n" +
-            "\n" +
-            "Em um ano, você tem " + result.oneYear + " de chances de sofrer um ataque do coração.\n" +
-            "Em cinco anos, você tem " + result.fiveYears + " de chances de sofrer um ataque do coração.\n" +
-            "Em dez anos, você tem " + result.tenYears + " de chances de sofrer um ataque do coração.\n";
+        if(result.doctorName){
+          return "A sua pontuação é de " + responses["points"] + "\n" +
+              "Este exame é de responsabilidade do médico " + result.doctorName + " (CRM: " + result.doctorCRM + ")\n" +
+              "Este exame pertence ao paciente " + result.patientName + " (CPF" + result.patientCPF + ")\n" +
+              "\n" +
+              "\n" +
+              "Em um ano, você tem " + result.oneYear + " de chances de sofrer um ataque do coração.\n" +
+              "Em cinco anos, você tem " + result.fiveYears + " de chances de sofrer um ataque do coração.\n" +
+              "Em dez anos, você tem " + result.tenYears + " de chances de sofrer um ataque do coração.\n";
+        }
+        else {
+          return "A sua pontuação é de " + responses["points"] + "\n" +
+              "\n" +
+              "\n" +
+              "Em um ano, você tem " + result.oneYear + " de chances de sofrer um ataque do coração.\n" +
+              "Em cinco anos, você tem " + result.fiveYears + " de chances de sofrer um ataque do coração.\n" +
+              "Em dez anos, você tem " + result.tenYears + " de chances de sofrer um ataque do coração.\n";
+        }
     },
 
     show: function () {
